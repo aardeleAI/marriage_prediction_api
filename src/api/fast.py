@@ -13,21 +13,20 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True,
 
 model = joblib.load("models/reduced_model_10.pkl")
 
-selected_features = ["idk_what's_going_on", "good_to_leave_home", "happy",
-                     "marriage", "anxieties", "harmony", "dreams",
-                     "hate_subjects", "Aggro_argue", "inner_world"]
+selected_features = ["enjoy_travel", "harmony", "dreams", "happy", "marriage", "anxieties",
+                     "Aggro_argue", "hate_subjects", "idk_what's_going_on", "good_to_leave_home"]
 
 class MarriageFeatures(BaseModel):
-    idk_what_s_going_on: float
-    good_to_leave_home: float
-    happy: float
-    marriage: float
-    anxieties: float
-    harmony: float
-    dreams: float
-    hate_subjects: float
-    Aggro_argue: float
-    inner_world: float
+    enjoy_travel: int
+    harmony: int
+    dreams: int
+    happy: int
+    marriage: int
+    anxieties: int
+    Aggro_argue:int
+    hate_subjects: int
+    idk_what_s_going_on: int
+    good_to_leave_home: int
 
 @app.get("/")
 def root():
@@ -40,11 +39,7 @@ def health():
 @app.post("/predict")
 def predict(features: MarriageFeatures):
 
-    data = features.dict()
-    df =pd.DataFrame([data])
-
-    # Renamed column
-    df.rename(columns={"idk_what_s_going_on": "idk_what's_going_on"}, inplace=True)
+    df =pd.DataFrame([features.dict()])
 
     # Missing features check
     missing_features = [f for f in selected_features if f not in df.columns]
