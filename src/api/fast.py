@@ -14,7 +14,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True,
 model = joblib.load("models/reduced_model_10.pkl")
 
 selected_features = ["enjoy_travel", "harmony", "dreams", "happy", "marriage", "anxieties",
-                     "Aggro_argue", "hate_subjects", "idk_what's_going_on", "good_to_leave_home"]
+                     "Aggro_argue", "hate_subjects", "idk_what_s_going_on", "good_to_leave_home"]
 
 class MarriageFeatures(BaseModel):
     enjoy_travel: int
@@ -39,20 +39,34 @@ def health():
 @app.post("/predict")
 def predict(features: MarriageFeatures):
 
-    df =pd.DataFrame([features.dict()])
+    df =pd.DataFrame([[features.enjoy_travel,
+                       features.harmony,
+                       features.dreams,
+                       features.happy,
+                       features.marriage,
+                       features.anxieties,
+                       features.Aggro_argue,
+                       features.hate_subjects,
+                       features.idk_what_s_going_on,
+                       features.good_to_leave_home]], columns=selected_features)
 
-    # Missing features check
-    missing_features = [f for f in selected_features if f not in df.columns]
-    if missing_features:
-        return {"error": f"Missing features: {missing_features}"}
+    # Model probabilities
 
-    # Class prediction (class 0 for stable marriage and class 1 for risky marriage)
-    prediction = model.predict(df)[0]
+    probability = model.predict_proba(df)[0]
+
+    stable_prob = float(probability[0])
+    divorce_prob = float(probability[1])
+
+    # Prediction
+
+    prediction = 1 if stable_prob >= 0.5 else 0
 
     # Interpretation message
-    if prediction == 0:
+
+    if prediction == 1:
         message = "Your marriage has a good chance of lasting!"
     else:
         message = "Your relationship has some vulnerabilities"
 
-    return {"prediction": int(prediction), "message": message}
+    return {"prediction": int(prediction), "stable_prob": stable_prob,
+            "divorce_prob": divorce_prob, "message": message}
