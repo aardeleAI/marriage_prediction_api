@@ -14,7 +14,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True,
 model = joblib.load("models/reduced_model_10.pkl")
 
 selected_features = ["enjoy_travel", "harmony", "dreams", "happy", "marriage", "anxieties",
-                     "Aggro_argue", "hate_subjects", "idk_what_s_going_on", "good_to_leave_home"]
+                     "Aggro_argue", "hate_subjects", "idk_what's_going_on", "good_to_leave_home"]
 
 class MarriageFeatures(BaseModel):
     enjoy_travel: int
@@ -48,7 +48,10 @@ def predict(features: MarriageFeatures):
                        features.Aggro_argue,
                        features.hate_subjects,
                        features.idk_what_s_going_on,
-                       features.good_to_leave_home]], columns=selected_features)
+                       features.good_to_leave_home]],
+                     columns=["enjoy_travel", "harmony", "dreams", "happy",
+                              "marriage", "anxieties", "Aggro_argue",
+                              "hate_subjects", "idk_what's_going_on", "good_to_leave_home"])
 
     # Model probabilities
 
