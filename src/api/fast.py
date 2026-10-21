@@ -67,9 +67,9 @@ def predict(features: MarriageFeatures):
     # Interpretation message
 
     if prediction == 1:
-        message = "Your marriage has a good chance of lasting!"
-    else:
         message = "Your relationship has some vulnerabilities"
+    else:
+        message = "Your marriage has a good chance of lasting!"
 
     return {"prediction": int(prediction), "stable_prob": stable_prob,
             "divorce_prob": divorce_prob, "message": message}
