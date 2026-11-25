@@ -11,22 +11,18 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True,
 
 # Model loading
 
-model = joblib.load("models/reduced_model_10.pkl")
+model = joblib.load("models/reduced_model_6.pkl")
 
-selected_features = ["enjoy_travel", "harmony", "dreams", "happy", "marriage", "anxieties",
-                     "Aggro_argue", "hate_subjects", "idk_what's_going_on", "good_to_leave_home"]
+selected_features = ["begin_correct", "trust", "anxieties",
+                     "idk_what's_going_on", "good_to_leave_home", "accusations"]
 
 class MarriageFeatures(BaseModel):
-    enjoy_travel: int
-    harmony: int
-    dreams: int
-    happy: int
-    marriage: int
+    begin_correct: int
+    trust: int
     anxieties: int
-    Aggro_argue:int
-    hate_subjects: int
     idk_what_s_going_on: int
     good_to_leave_home: int
+    accusations: int
 
 @app.get("/")
 def root():
@@ -39,19 +35,14 @@ def health():
 @app.post("/predict")
 def predict(features: MarriageFeatures):
 
-    df =pd.DataFrame([[features.enjoy_travel,
-                       features.harmony,
-                       features.dreams,
-                       features.happy,
-                       features.marriage,
+    df =pd.DataFrame([[features.begin_correct,
+                       features.trust,
                        features.anxieties,
-                       features.Aggro_argue,
-                       features.hate_subjects,
                        features.idk_what_s_going_on,
-                       features.good_to_leave_home]],
-                     columns=["enjoy_travel", "harmony", "dreams", "happy",
-                              "marriage", "anxieties", "Aggro_argue",
-                              "hate_subjects", "idk_what's_going_on", "good_to_leave_home"])
+                       features.good_to_leave_home,
+                       features.accusations]],
+                     columns=["begin_correct", "trust", "anxieties",
+                     "idk_what's_going_on", "good_to_leave_home", "accusations"])
 
     # Model probabilities
 
@@ -62,7 +53,7 @@ def predict(features: MarriageFeatures):
 
     # Prediction
 
-    prediction = 1 if stable_prob >= 0.5 else 0
+    prediction = 1 if divorce_prob >= 0.5 else 0
 
     # Interpretation message
 
