@@ -48,19 +48,19 @@ def predict(features: MarriageFeatures):
 
     probability = model.predict_proba(df)[0]
 
-    stable_prob = float(probability[0])
-    divorce_prob = float(probability[1])
+    divorce_prob = float(probability[0])
+    stab_prob = float(probability[1])
 
     # Prediction
 
-    prediction = 1 if divorce_prob >= 0.5 else 0
+    prediction = int(model.predict(df)[0])
 
     # Interpretation message
 
     if prediction == 1:
-        message = "Your relationship has some vulnerabilities"
-    else:
         message = "Your marriage has a good chance of lasting!"
+    else:
+        message = "Your relationship has some vulnerabilities"
 
     return {"prediction": int(prediction), "stable_prob": stable_prob,
             "divorce_prob": divorce_prob, "message": message}
