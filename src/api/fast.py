@@ -44,6 +44,12 @@ def predict(features: MarriageFeatures):
                      columns=["begin_correct", "trust", "anxieties",
                      "idk_what's_going_on", "good_to_leave_home", "accusations"])
 
+    # Inversion of negative features
+
+    df["idk_what's_going_on"] = 4 - df["idk_what's_going_on"]
+    df["good_to_leave_home"] = 4 - df["good_to_leave_home"]
+    df["accusations"] = 4 - df["accusations"]
+
     # Model probabilities
 
     probability = model.predict_proba(df)[0]
