@@ -49,7 +49,7 @@ def predict(features: MarriageFeatures):
     probability = model.predict_proba(df)[0]
 
     divorce_prob = float(probability[0])
-    stab_prob = float(probability[1])
+    stable_prob = float(probability[1])
 
     # Prediction
 
