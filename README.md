@@ -1,5 +1,7 @@
 ## Can Six Questions Predict Divorce?
 
+## Overview
+
 Relationship researchers have spent decades trying to understand why some couples stay together while others separate.
 
 One of the most influential frameworks in this area comes from psychologist John Gottman, whose work inspired the development of the Divorce Predictor Scale (DPS), a questionnaire containing 54 statements about communication, trust, emotional awareness and conflict management.
@@ -15,6 +17,14 @@ The result was surprising.
 The final model retained only 6 statements out of the original 54 while maintaining an F1-score close to 0.99.
 
 The project was then deployed as a production-ready application using FastAPI, Render and Streamlit.
+
+## Live Demo
+
+📱 Try the application:
+[Marriage Stability Predictor](https://marriage-stability-prediction.streamlit.app)
+
+📖 Explore the API:
+[FastAPI Documentation](https://marriage-prediction-api.onrender.com/docs)
 
 ## Project Goal
 
@@ -156,6 +166,12 @@ These results suggest that a relatively small number of relationship characteris
 
 While the project does not claim to replace the underlying psychological framework of the Divorce Predictor Scale, it demonstrates that much of its predictive signal can be preserved using a substantially reduced set of statements.
 
+## Screenshot
+
+### Streamlit Web Application
+
+![Streamlit App](assets/streamlit_app.png)
+
 ## Technologies Used
 
 ### Data Science & Machine Learning
@@ -236,16 +252,4 @@ Start the API:
 
 ```bash
 bash start.sh
-```
-
-The API will be available at:
-
-```text
-http://localhost:10000
-```
-
-Swagger documentation:
-
-```text
-http://localhost:10000/docs
 ```
