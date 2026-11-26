@@ -118,6 +118,7 @@ Original DPS Dataset (54 Statements)
                 │
                 ▼
           Streamlit
+```
 
 ## Results
 
@@ -194,6 +195,7 @@ marriage_prediction_api
 ├── README.md
 ├── requirements.txt
 └── start.sh
+```
 
 ## API Example
 
@@ -210,6 +212,7 @@ The model can be queried through a FastAPI endpoint.
   "good_to_leave_home": 0,
   "accusations": 0
 }
+```
 
 ### Response
 
